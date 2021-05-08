@@ -1,0 +1,5 @@
+#include"acllib"
+int Setup(){
+  initwindow("hello",0,0,100,100);
+  return 0;
+}
