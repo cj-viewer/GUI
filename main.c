@@ -31,6 +31,7 @@ void initialize(){
     (str->word)[0] = '\0';
     car->x = car->y = 0;
     car->show = 0;
+    setTextFont("Consolas");
     SetCaretBlinkTime(500);
     showCaret();
 }
@@ -99,20 +100,24 @@ void keyboardEvent(int key,int event){
                 case 56 : (str->word)[car->x-1] = k == 1?'8':'*';break;
                 case 57 : (str->word)[car->x-1] = k == 1?'9':'(';break;
             }
-            }
-            else if(key == 188)(str->word)[car->x-1] = k == 1?',':'<';
-            else if(key == 186)(str->word)[car->x-1] = k == 1?';':':';
-            else if(key == 187)(str->word)[car->x-1] = k == 1?'=':'+';
-            else if(key == 189)(str->word)[car->x-1] = k == 1?'-':'_';
-            else if(key == 190)(str->word)[car->x-1] = k == 1?'.':'>';
-            else if(key == 191)(str->word)[car->x-1] = k == 1?'/':'?';
-            else if(key == 192)(str->word)[car->x-1] = k == 1?'`':'~';
-            else if(key == 219)(str->word)[car->x-1] = k == 1?'[':'{';
-            else if(key == 220)(str->word)[car->x-1] = k == 1?'\\':'|';
-            else if(key == 221)(str->word)[car->x-1] = k == 1?']':'}';
-            else if(key == 222)(str->word)[car->x-1] = k == 1?'\'':'"';
-            else if(k == -1)(str->word)[car->x-1] = toascii(key);
-            else (str->word)[car->x-1] = tolower(toascii(key));
+          }else{
+              switch(key){
+                case 188:(str->word)[car->x-1] = k == 1?',':'<';break;
+                case 186:(str->word)[car->x-1] = k == 1?';':':';break;
+                case 187:(str->word)[car->x-1] = k == 1?'=':'+';break;
+                case 189:(str->word)[car->x-1] = k == 1?'-':'_';break;
+                case 190:(str->word)[car->x-1] = k == 1?'.':'>';break;
+                case 191:(str->word)[car->x-1] = k == 1?'/':'?';break;
+                case 192:(str->word)[car->x-1] = k == 1?'`':'~';break;
+                case 219:(str->word)[car->x-1] = k == 1?'[':'{';break;
+                case 220:(str->word)[car->x-1] = k == 1?'\\':'|';break;
+                case 221:(str->word)[car->x-1] = k == 1?']':'}';break;
+                case 222:(str->word)[car->x-1] = k == 1?'\'':'"';break;
+                default :if(k == -1)(str->word)[car->x-1] = toascii(key);
+                         else (str->word)[car->x-1] = tolower(toascii(key));
+                         break;
+              }
+          }
         }else{
             for(int i = car->x;i<str->nowlen;i++)new[i+1] = (str->word)[i];
             for(int i = 0;i<car->x;i++)new[i] = (str->word)[i];
@@ -130,18 +135,20 @@ void keyboardEvent(int key,int event){
                 case 56 : new[car->x++] = '*';goto out;
                 case 57 : new[car->x++] = '(';goto out;
             }
-            if(key == 188)new[car->x++] = k == 1?',':'<';
-            else if(key == 186)new[car->x++] = k == 1?';':':';
-            else if(key == 187)new[car->x++] = k == 1?'=':'+';
-            else if(key == 189)new[car->x++] = k == 1?'-':'_';
-            else if(key == 190)new[car->x++] = k == 1?'.':'>';
-            else if(key == 191)new[car->x++] = k == 1?'/':'?';
-            else if(key == 192)new[car->x++] = k == 1?'`':'~';
-            else if(key == 219)new[car->x++] = k == 1?'[':'{';
-            else if(key == 220)new[car->x++] = k == 1?'\\':'|';
-            else if(key == 221)new[car->x++] = k == 1?']':'}';
-            else if(key == 222)new[car->x++] = k == 1?'\'':'"';
-            else new[car->x++] = toascii(key);
+            switch(key){
+                case 188 :new[car->x++] = k == 1?',':'<';break;
+                case 186 :new[car->x++] = k == 1?';':':';break;
+                case 187 :new[car->x++] = k == 1?'=':'+';break;
+                case 189 :new[car->x++] = k == 1?'-':'_';break;
+                case 190 :new[car->x++] = k == 1?'.':'>';break;
+                case 191 :new[car->x++] = k == 1?'/':'?';break;
+                case 192 :new[car->x++] = k == 1?'`':'~';break;
+                case 219 :new[car->x++] = k == 1?'[':'{';break;
+                case 220 :new[car->x++] = k == 1?'\\':'|';break;
+                case 221 :new[car->x++] = k == 1?']':'}';break;
+                case 222 :new[car->x++] = k == 1?'\'':'"';break;
+                default :new[car->x++] = toascii(key);break;
+            }
             out:
             free(str->word);
             str->word = new;
